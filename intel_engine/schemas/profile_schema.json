@@ -1,0 +1,351 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "profile_schema.json",
+  "title": "Comprehensive Person Profile Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "identity",
+    "contact",
+    "digital",
+    "business",
+    "legal",
+    "metadata",
+    "social",
+    "geo",
+    "risk"
+  ],
+  "properties": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["full_name", "aliases", "dob", "gender"],
+      "properties": {
+        "full_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dob": {
+          "type": "string",
+          "format": "date"
+        },
+        "gender": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["emails", "phones", "usernames", "addresses"],
+      "properties": {
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\+?[0-9\\-\\s]{5,}$"
+          }
+        },
+        "usernames": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "postal_code": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "digital": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ips", "domains", "devices", "exposed_ports"],
+      "properties": {
+        "ips": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "ipv4"
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          }
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": { "type": "string" },
+              "os": { "type": "string" },
+              "identifier": { "type": "string" },
+              "last_seen": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "exposed_ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "ip": { "type": "string", "format": "ipv4" },
+              "port": { "type": "integer", "minimum": 0, "maximum": 65535 },
+              "protocol": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "business": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["abn", "acn", "company_names", "roles", "gst_status"],
+      "properties": {
+        "abn": {
+          "type": "string"
+        },
+        "acn": {
+          "type": "string"
+        },
+        "company_names": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "title": { "type": "string" },
+              "company": { "type": "string" },
+              "start_date": { "type": "string", "format": "date" },
+              "end_date": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "gst_status": {
+          "type": "string",
+          "enum": ["registered", "not_registered", "unknown"]
+        }
+      }
+    },
+    "legal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bankruptcies", "court_cases", "sanctions"],
+      "properties": {
+        "bankruptcies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "case_number": { "type": "string" },
+              "jurisdiction": { "type": "string" },
+              "status": { "type": "string" },
+              "filed_date": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "court_cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "jurisdiction": { "type": "string" },
+              "role": { "type": "string" },
+              "status": { "type": "string" },
+              "date": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "sanctions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "list": { "type": "string" },
+              "authority": { "type": "string" },
+              "reason": { "type": "string" },
+              "date": { "type": "string", "format": "date" }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documents", "authors", "file_sources"],
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" },
+              "created": { "type": "string", "format": "date-time" },
+              "location": { "type": "string" }
+            }
+          }
+        },
+        "authors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "file_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "social": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platforms", "profile_links", "last_activity"],
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "profile_links": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "last_activity": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "platform": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "summary": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "geo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cities", "geo_coordinates"],
+      "properties": {
+        "cities": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "geo_coordinates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180
+              },
+              "radius_m": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exposure_score", "red_flags"],
+      "properties": {
+        "exposure_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "red_flags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "category": { "type": "string" },
+              "description": { "type": "string" },
+              "severity": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
