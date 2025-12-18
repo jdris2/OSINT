@@ -1,7 +1,9 @@
 """Research module that emulates Twitter/X activity collection from open OSINT cues.
 
-This module is designed for the modular PI intelligence engine. It analyzes a subject's profile to deterministically extract or synthesize a Twitter/X handle, profile link, bio, recent tweets, and follower count using available open-source cues (usernames, emails, names, business roles, etc). 
-Results are stored in the profile's 'social' section using schema-compliant field names, validated against the shared profile schema, and logged for downstream processing.
+This module is designed for the modular PI intelligence engine. It attempts to find and summarize a subject's Twitter/X presence using open-source cues from the provided profile object.
+It deterministically generates a plausible Twitter handle, bio, recent tweets, and follower count based on the subject's profile fields (usernames, emails, names, business roles, etc).
+All results are stored in the profile['social'] section using schema-compliant field names, validated against schemas/profile_schema.json, and logged using the .log_result() method.
+No real API calls are made; all data is synthesized for research and testing purposes.
 """
 
 import json
