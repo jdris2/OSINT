@@ -1,10 +1,6 @@
-"""Research module that emulates Twitter/X activity collection from open OSINT cues.
+"""Research module that emulates Twitter/X activity collection from open OSINT cues."""
 
-This module is designed for the modular PI intelligence engine. It attempts to find and summarize a subject's Twitter/X presence using open-source cues from the provided profile object.
-It deterministically generates a plausible Twitter handle, bio, recent tweets, and follower count based on the subject's profile fields (usernames, emails, names, business roles, etc).
-All results are stored in the profile['social'] section using schema-compliant field names, validated against schemas/profile_schema.json, and logged using the .log_result() method.
-No real API calls are made; all data is synthesized for research and testing purposes.
-"""
+from __future__ import annotations
 
 import json
 import logging
@@ -14,6 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from intel_engine.core.module_base import IntelModuleBase
+
 
 def _load_social_output_schema() -> Dict[str, Any]:
     """
@@ -50,7 +47,8 @@ def _load_social_output_schema() -> Dict[str, Any]:
         "properties": {"social": social_schema},
     }
 
-class Research_Social_Twitter_Activity(IntelModuleBase):
+
+class ResearchSocialTwitterActivity(IntelModuleBase):
     """Find and summarize a subject's Twitter/X presence for the social profile."""
 
     MODULE_NAME = "Research_Social_Twitter_Activity"
