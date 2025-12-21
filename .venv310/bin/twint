@@ -1,0 +1,7 @@
+#!/Users/joe/Desktop/osint/.venv310/bin/python
+import sys
+from twint.cli import run_as_command
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(run_as_command())
